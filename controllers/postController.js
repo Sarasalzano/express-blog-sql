@@ -70,26 +70,12 @@ function modify(req, res) {
 
 //funzione delete 
 function destroy(req, res) {
-    //recupero l'id e lo trasformo da stringa a numero 
-    const id = parseInt(req.params.id);
+    //recupero ID dall' URL
+    const {id} = req.params;
 
-    //cerco post tramite id
-    const post = posts.find(post => post.id === id);
-
-    //controllo
-    if(!post) {
-        res.status(404)
-        return res.json ({
-            status : 404,
-            error : "Not Found",
-            message : "Post Non Trovato"
-        })
-    }
-    //rimuovo post
-    posts.splice(posts.indexOf(post), 1);
-    //setto stato corretto
+    connection.query("DELETE FROM posts WHERE id = ?", [id], (err) => {
+        if (err) return res.status(500).json({error: "Database query failed" });
     res.sendStatus(204);
-    console.log(posts);
+    });
 }
-
 module.exports = {index, show, store, update, modify, destroy}; 
