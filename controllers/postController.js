@@ -15,11 +15,15 @@ function index(req, res) {
 
 //funzione show
 function show(req, res) {
-    //recupero l'id e lo trasformo da stringa a numero 
-    const id = parseInt(req.params.id);
-    //cerco id post
-    const post = posts.find(post => post.id === id);
-    res.json(post);
+    //recupero l'id da Url
+    const id = req.params.id;
+
+    const sql = "SELECT * FROM posts WHERE id = ?";
+    connection.query(sql, [id], (err, results) => {
+        if(err) return res.status(500).json({ error: "Database query failed"});
+        if(results.length === 0) return res.status(404).json({error: "Pizza not found"});
+        res.json(results[0])
+    });
 }
 
 //funzione store
