@@ -1,5 +1,7 @@
 //import dell array dei post
 const posts = require("../data/posts");
+//import connection
+const connection = require("../data/db")
 
 //riporto logica delle funzioni che si trovano nel router. In questo caso la funzione index
 function index(req, res) {
