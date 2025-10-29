@@ -9,3 +9,8 @@ const connection = mysql.createConnection({
     database: "blog_db"
 });
 
+//gestione errore connessione
+connection.connect((err)=>{
+if(err) throw err;
+console.log("Connected to Mysql")
+});
