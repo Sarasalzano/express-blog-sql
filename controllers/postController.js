@@ -5,7 +5,12 @@ const connection = require("../data/db")
 
 //riporto logica delle funzioni che si trovano nel router. In questo caso la funzione index
 function index(req, res) {
+    //prendi tutti i post
+    const sql = "SELECT * FROM posts";
+    connection.query(sql,(err, posts) => {
+    if(err) return res.status(500).json({error:"Database query failed"});
     res.json(posts);
+    })
 }
 
 //funzione show
